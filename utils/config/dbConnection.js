@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const MONGO_URL = process.env.MONGO_URI;
 
-if(MONGO_URL){
+if(!MONGO_URL){
     throw new Error("MongoDb connetion string  connection failed")
 };
 
