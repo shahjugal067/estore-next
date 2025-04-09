@@ -159,7 +159,7 @@ const Login = ()  =>{
                             </Button>
                         </div>
                 </div>
-                <p className='mt-4'>don&apos;t have an account? <Link href='/register' className='text-blue-500'>Sign Up</Link></p>
+                <p className='mt-4'>Don&apos;t have an account? <Link href='/signup' className='text-blue-500'>Sign Up</Link></p>
 
             </motion.div>
         </div>
