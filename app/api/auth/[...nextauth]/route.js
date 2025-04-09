@@ -14,7 +14,7 @@ async function createUser(email,password,name){
 
     const newUser = new User({
         email, password:hashedPassword,name,
-        prifileImage:DEFAUL_PROFILE_IMAGE,
+        profileImage:DEFAUL_PROFILE_IMAGE,
     });
      await newUser.save()
 };
@@ -64,7 +64,7 @@ export const authOptions = {
     session:{
         strategy: 'jwt'
     },
-    callbacks: {
+    callback: {
         async singIn({user,account}){
             if(account.provider === 'google'){
                 try {

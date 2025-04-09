@@ -2,7 +2,6 @@
 import { motion } from 'framer-motion'
 import { Eye, EyeOff, Loader, Mail } from 'lucide-react'
 import Image from 'next/image'
-
 import { signIn } from 'next-auth/react'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -39,7 +38,7 @@ const AnimatedBackground = () =>{
     )
 };
 
-const Signup = ()  =>{
+const Login = ()  =>{
     const router = useRouter()
     const [loading,setLoading] = useState(false);
     const [error,setError] = useState('')
@@ -75,27 +74,19 @@ const Signup = ()  =>{
             if(password !== user.password){
                 setError("Invalid Password")
             }
-            const res = await axios.post('/api/login',{
-                
-                email:user.email,
-                password: user.password,
-            });
-            if(res.status === 200 || res.status === 201){
-                console.log("User Login successfull");
-
+           
                 // sign in the user
-                const signInResult = await signIn('credentials',{
+                const res = await signIn('credentials',{
                     email:user.email,
                     password: user.password,
                     redirect:false,
-
                 });
-                if(signInResult.error){
+                if(res?.error){
+                    console.log(res)
                     setError("Something went wrong in singIn user")
                 }else{
-                    router.push('/')
+                    router.push('/dashboard')
                 }
-            }
 
         } catch (error) {
             console.log(error)
@@ -175,4 +166,4 @@ const Signup = ()  =>{
     )
 
 };
- export default Signup;
+ export default Login;

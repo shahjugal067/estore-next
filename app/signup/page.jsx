@@ -94,7 +94,7 @@ const Signup = ()  =>{
                 if(signInResult.error){
                     setError("Something went wrong in singIn user")
                 }else{
-                    router.push('/')
+                    router.push('/dashboard')
                 }
             }
 
