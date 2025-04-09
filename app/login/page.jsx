@@ -135,8 +135,9 @@ const Login = ()  =>{
                     <Button variant='default' type='submit' disabled={loading}
                     className='w-full bg-amber-400 hover:bg-amber-600'>
                         {loading ? (
-                            <div className='block'>
-                                <Loader className='mr-2 h-4 w-4 animate-spin' />
+                            <div className='block flex'>
+                                <Loader className='mr-2 h-5 w-5 animate-spin text-green-700' />
+                                <span>Sign In</span>
                             </div>
                         ) : (
                             <span>Sign In</span>

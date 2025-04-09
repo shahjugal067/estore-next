@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/utils/config/dbConnection";
 import Order from "@/utils/models/Order";
-import {Product} from '@/utils/models/Product'
+
 import Stripe from "stripe";
+import Product from "@/utils/models/Product";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
@@ -23,7 +24,7 @@ export async function POST(req) {
         let productInfos;
 
         try {
-            productIds = await Product.find({_id:uniqueIds});
+            productIds = await Product.find({_id: { $in: uniqueIds}});
             console.log("Found products",productInfos)
 
         } catch (error) {
@@ -32,9 +33,9 @@ export async function POST(req) {
         if(!productInfos || productInfos.length === 0){
             return NextResponse.json({error:"No product found"},{status:404})
         }
-        const line_items= [];
-        const total = 0;
-        const orderCartProducts =[];
+        let line_items= [];
+        let total = 0;
+        let orderCartProducts =[];
 
         for(const cartItem of cartItems){
             const productInfo = productInfos.find((p)=> p._id.toString() === cartItem.id);
@@ -82,7 +83,7 @@ export async function POST(req) {
                 payment_method_types:['card'],
                 line_items,
                 mode:'payment',
-                success_url:`${process.env.NEXT_PUBLIC_URL}/checkout/session?orderId=${orderDoc._id}`,
+                success_url:`${process.env.NEXT_PUBLIC_URL}/checkout/success?orderId=${orderDoc._id}`,
                 cancel_url:`${process.env.NEXT_PUBLIC_URL}/checkout/canceled`,
                 metadata:{
                     orderId:orderDoc._id.toString(),
